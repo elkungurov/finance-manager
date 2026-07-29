@@ -36,7 +36,7 @@ header h1{
 }
 header p{color:var(--text-secondary);font-size:0.85rem;margin-top:2px}
 
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
 .stat-card{
   background:var(--bg-card);border:1px solid var(--border);
   border-radius:var(--radius);padding:14px 12px;text-align:center;
@@ -421,11 +421,6 @@ function renderCalendar() {
     let cls = 'day-cell';
     if (isToday) cls += ' today';
     if (isFuture) cls += ' future';
-
-    const dots = getDayDots(viewYear, viewMonth, d);
-    const dotsHtml = dots.length > 0
-      ? '<div class="day-dots">' + dots.map(t => '<span class="' + t + '"></span>').join('') + '</div>'
-      : '';
 
     const icons = getDayIcons(viewYear, viewMonth, d);
     const iconsHtml = icons.length > 0
