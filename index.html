@@ -446,7 +446,12 @@ function renderCalendar() {
       const year = parseInt(el.dataset.year);
       const month = parseInt(el.dataset.month);
       const day = parseInt(el.dataset.day);
-      openPaymentModal(year, month, day);
+      const hasPayments = (data.credits || []).some(c => c.day === day);
+      if (hasPayments) {
+        openPaymentModal(year, month, day);
+      } else {
+        openCreditModal(null, day);
+      }
     });
   });
 
@@ -551,13 +556,12 @@ function closePaymentModal() {
   document.getElementById('payment-overlay').classList.remove('active');
 }
 
-function openCreditModal(credit) {
+function openCreditModal(credit, prefilledDay) {
   editingCreditId = credit ? credit.id : null;
   document.getElementById('credit-modal-title').textContent = credit ? 'Редактировать кредит' : 'Добавить кредит';
   document.getElementById('credit-name').value = credit ? credit.name : '';
-  document.getElementById('credit-total').value = credit ? credit.total : '';
   document.getElementById('credit-monthly').value = credit ? credit.monthly : '';
-  document.getElementById('credit-day').value = credit ? credit.day : '';
+  document.getElementById('credit-day').value = credit ? credit.day : (prefilledDay || '');
   document.getElementById('credit-overlay').classList.add('active');
   document.getElementById('credit-name').focus();
 }
