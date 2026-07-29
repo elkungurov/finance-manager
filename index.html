@@ -108,11 +108,11 @@ header p{color:var(--text-secondary);font-size:0.85rem;margin-top:2px}
 .day-cell.today{border-color:var(--accent);box-shadow:0 0 8px rgba(78,204,163,.2)}
 .day-cell .day-num{font-size:0.9rem;font-weight:700;line-height:1}
 .day-cell .day-dots{display:flex;gap:3px;flex-wrap:wrap;justify-content:center}
-.day-cell .day-dots span{width:6px;height:6px;border-radius:50%}
-.day-cell .day-dots .icon-paid{background:transparent;width:auto;height:auto;color:var(--accent);font-size:0.7rem;font-weight:700;line-height:1}
-.day-cell .day-dots .icon-early{background:transparent;width:auto;height:auto;color:var(--yellow);font-size:0.6rem;line-height:1}
-.day-cell .day-dots .icon-unpaid{background:var(--red);border-radius:50%}
-.day-cell .day-dots .icon-future{background:var(--border);border-radius:50%}
+.day-cell .day-dots{display:flex;gap:3px;align-items:center;min-height:12px}
+.day-cell .day-dots .icon-paid{color:var(--accent);font-size:0.7rem;font-weight:700;line-height:1}
+.day-cell .day-dots .icon-early{color:var(--yellow);font-size:0.55rem;line-height:1}
+.day-cell .day-dots .icon-unpaid{width:6px;height:6px;border-radius:50%;background:var(--red);display:inline-block}
+.day-cell .day-dots .icon-future{width:6px;height:6px;border-radius:50%;background:var(--border);display:inline-block}
 
 .overlay{
   position:fixed;inset:0;background:rgba(0,0,0,.65);
@@ -471,8 +471,8 @@ function getDayIcons(year, month, day) {
       else {
         const cellDate = new Date(year, month, day);
         const today = new Date();
-        if (cellDate <= today) icons.push('<span class="icon-unpaid">\u25CF</span>');
-        else icons.push('<span class="icon-future">\u25CF</span>');
+        if (cellDate <= today) icons.push('<span class="icon-unpaid"></span>');
+        else icons.push('<span class="icon-future"></span>');
       }
     }
   }
