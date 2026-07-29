@@ -308,12 +308,23 @@ function init() {
 
 async function loadData() {
   try {
-    const res = await fetch('/api/data');
-    if (res.ok) { data = await res.json(); localStorage.setItem('financeData', JSON.stringify(data)); return; }
-  } catch(e) {}
-  try {
     const cached = localStorage.getItem('financeData');
     if (cached) data = JSON.parse(cached);
+  } catch(e) {}
+  try {
+    const res = await fetch('/api/data');
+    if (res.ok) {
+      const server = await res.json();
+      const hasData = (server.credits?.length || 0) > 0 || Object.keys(server.payments || {}).length > 0;
+      if (hasData) {
+        data = server;
+        localStorage.setItem('financeData', JSON.stringify(data));
+      } else if ((data.credits?.length || 0) > 0) {
+        await fetch('/api/data', {
+          method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
+        });
+      }
+    }
   } catch(e) {}
 }
 
